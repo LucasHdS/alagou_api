@@ -15,7 +15,9 @@ const PostSchema = new mongoose.Schema({
     createdAt: {
         type: Date,
         default: Date.now
-    } 
+    },
+    lng: Number,
+    lat: Number    
 });
 
 PostSchema.pre('save', function(){

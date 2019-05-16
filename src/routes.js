@@ -12,17 +12,21 @@ routes.get('/posts', async (req,res) =>{
 
 routes.post('/posts', multer(multerConfig).single('file'), async (req,res) =>{
     
-    const { originalname: name, size, key, location: url = '' } = req.file;
-
-    const post = await Post.create({
+    const { originalname: name, size, key, location: url = ''} = req.file;
+    const {lat,lng} = req.body;
+    console.log(req.body);
+    
+    const floodPoints = await Post.create({
         name,
-        size, 
+        size,   
         key,
         url,
-        location: ''
+        location: '',
+        lat,
+        lng   
     });
 
-    return res.json(post);
+    return res.json(floodPoints);
 });
 
 routes.delete('/posts/:id', async( req, res) =>{
