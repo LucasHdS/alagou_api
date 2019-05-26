@@ -5,17 +5,26 @@ const multerS3 = require('multer-s3');
 const Post = require('./config/models/post');
 
 routes.get('/posts', async (req,res) =>{
-    const posts = await Post.find();
+    const floodPoints = await Post.find();
 
-    return res.json(posts); 
+    return res.json(floodPoints); 
 });
 
-routes.post('/posts', multer(multerConfig).single('file'), async (req,res) =>{
+routes.get('/posts/:id', async (req,res) =>{
+    const floodPoint = await Post.findById(req.params.id);
+
+    return res.json(floodPoint); 
+});
+
+
+routes.post('/posts/:lat/:lng/:type/:level', multer(multerConfig).single('file'), async (req,res) =>{
     
     const { originalname: name, size, key, location: url = ''} = req.file;
-    const {lat,lng} = req.body;
-    console.log(req.body);
-    
+    const lat = req.params.lat;
+    const lng = req.params.lng;
+    const type = req.params.type;
+    const level = req.params.level;
+      
     const floodPoints = await Post.create({
         name,
         size,   
@@ -23,8 +32,10 @@ routes.post('/posts', multer(multerConfig).single('file'), async (req,res) =>{
         url,
         location: '',
         lat,
-        lng   
-    });
+        lng,
+        type,
+        level   
+    }); 
 
     return res.json(floodPoints);
 });

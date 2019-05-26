@@ -25,6 +25,7 @@ const storageTypes = {
         bucket: 'water-images',
         contentType: multerS3.AUTO_CONTENT_TYPE,
         acl: 'public-read',
+        sslEnabled: true,
         key: (req, file, cb) => {
             crypto.randomBytes(16, (err,hash) =>{
                 if (err) cb(err);
@@ -35,7 +36,6 @@ const storageTypes = {
             });            
         } 
     }),
-
 }
 
 module.exports = {
