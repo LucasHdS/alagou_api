@@ -19,12 +19,23 @@ const PostSchema = new mongoose.Schema({
     lng: Number,
     lat: Number,
     type: String,
-    level: String    
+    level: String,
+    confirmations: {
+        type: Number,
+        default: 0
+    },
+    deviceId: String,
+    updateAt: Date
+},
+{
+    timestamps: {
+        updatedAt: true
+    }
 });
 
 PostSchema.pre('save', function(){
     if(!this.url){
-        this.url = `${process.env.APP_URL}/files/${this.key}`;
+        this.url = `http://3.16.180.128:3000/files/${this.key}`;
     }
 });
 

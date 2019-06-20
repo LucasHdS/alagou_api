@@ -25,7 +25,7 @@ const storageTypes = {
         bucket: 'water-images',
         contentType: multerS3.AUTO_CONTENT_TYPE,
         acl: 'public-read',
-        sslEnabled: true,
+        sslEnabled: false,
         key: (req, file, cb) => {
             crypto.randomBytes(16, (err,hash) =>{
                 if (err) cb(err);
@@ -41,7 +41,7 @@ const storageTypes = {
 module.exports = {
     dest: path.resolve(__dirname, '..', '..', 'tmp', 'uploads'),
     
-    storage: storageTypes[process.env.STORAGE_TYPE] ,
+    storage: storageTypes['local'] ,
  
     limits:{
         fileSize: 2 * 1024 * 1024  
