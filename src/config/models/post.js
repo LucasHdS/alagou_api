@@ -26,7 +26,7 @@ const PostSchema = new mongoose.Schema({
     },
     deviceId: String,
     updateAt: Date
-},
+},  
 {
     timestamps: {
         updatedAt: true
